@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>iServices</title>
+    <style type="text/css">
+        a {
+            font-size: 60px;
+            color: red;
+            font-weight: bold;
+
+        }
+    </style>
+    <!--var returnCitySN = {"cip": "120.24.208.42", "cid": "310000", "cname": "上海市”, "cdevice" : "pc"};-->
+    <script type="text/javascript" src="https://iservices-iam.the-ascott.com.cn/wifi/download/cityjson.php?ip=111.164.48.169"></script>
+
+    <script type="text/javascript">
+        var checkIphoneAndWeixin = 0;
+        const PAGE_IPAD = "/wifi/test/ipad.html";
+        const PAGE_PC = "/wifi/test/pc.html";
+        const ANDROID_V1 = "/wifi/test/version-android-V1.html";
+        //const ANDROID_WEIXIN_V1 = "/wifi/test/version-android-V1-weixin.html";
+        const ANDROID_V2 = "/wifi/test/version-android-V2.html";
+        //const ANDROID_WEIXIN_V2 = "/wifi/test/version-android-V2-weixin.html";
+        const IPHONE_V1 = "/wifi/test/version-iphone-V1.html";
+        const IPHONE_WEIXIN_V1 = "/wifi/test/version-iphone-V1-weixin.html";
+        const IPHONE_V2 = "/wifi/test/version-iphone-V2.html";
+        const IPHONE_WEIXIN_V2 = "/wifi/test/version-iphone-V2-weixin.html";
+
+        var browser = {
+            versions: function () {
+                var u = navigator.userAgent, app = navigator.appVersion;
+                return {         //移动终端浏览器版本信息
+                    trident: u.indexOf('Trident') > -1, //IE内核
+                    presto: u.indexOf('Presto') > -1, //opera内核
+                    webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+                    mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+                    iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+                    iPad: u.indexOf('iPad') > -1, //是否iPad
+                    webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+                    weixin: u.indexOf('MicroMessenger') > -1
+                };
+            }(),
+            language: (navigator.browserLanguage || navigator.language).toLowerCase()
+        }
+
+        var cityFilter = function () {
+            var cityCodes = [
+                310000, //shanghai
+                "上海市",
+                120000, //tianjin
+                "天津市",
+                440100, //guangzhou
+                "广州市",
+                330100, //hangzhou
+                "杭州市",
+                610100, //xian
+                "西安市",
+                340100, //hefei
+                "合肥市",
+                350200, //xiamen
+                "厦门市"
+            ];
+            for (var i = 0; i < cityCodes.length; i++) {
+                if (cityCodes[i] == returnCitySN.cid || cityCodes[i] == returnCitySN.cname) return true;
+            }
+            return false;
+        }();
+
+        var url = PAGE_PC;
+        if (browser.versions.mobile) {
+            //mobile device
+            if (browser.versions.iPhone) {
+                if (cityFilter) {
+                    if (browser.versions.weixin) {
+                        url = IPHONE_WEIXIN_V1;
+                        checkIphoneAndWeixin = 1;
+                    } else {
+                        url = IPHONE_V1;
+                    }
+                } else {
+                    if (browser.versions.weixin) {
+                        url = IPHONE_WEIXIN_V2;
+                        checkIphoneAndWeixin = 1;
+                    } else {
+                        url = IPHONE_V2;
+                    }
+                }
+            }
+            if (browser.versions.android) {
+                if (cityFilter) {
+                    url = ANDROID_V1;
+                } else {
+                    url = ANDROID_V2;
+                }
+            }
+            if (browser.versions.iPad) {
+                url = PAGE_IPAD;
+            }
+        } else {
+            //when not a mobile device
+            document.write("请使用手机设备扫描");
+            document.write("Please scan the QR code with a mobile device");
+            url = PAGE_PC;
+        }
+        //window.location.href = url;
+    </script>
+</head>
+
+<body>
+<section style="border: 0px none; padding: 0px; box-sizing: border-box; margin: 0px; font-family: 微软雅黑;">
+    <section
+            style="margin: 3px; background-color: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 3px; border-color: rgb(211, 42, 99); box-sizing: border-box; padding: 0px;">
+        <script type="text/javascript">
+            if (checkIphoneAndWeixin == 1) {
+                document.write("<img src='weixin1.png' style='width: 100%'/>;");
+            }
+        </script>
+    </section>
+</section>
+</body>
+
+</html>
