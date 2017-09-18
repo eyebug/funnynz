@@ -19,9 +19,9 @@
         const PAGE_IPAD = "/wifi/test/ipad.html";
         const PAGE_PC = "/wifi/test/pc.html";
         const ANDROID_V1 = "/wifi/test/version-android-V1.html";
-        //const ANDROID_WEIXIN_V1 = "/wifi/test/version-android-V1-weixin.html";
+        const ANDROID_WEIXIN_V1 = "/wifi/test/version-android-V1-weixin.html";
         const ANDROID_V2 = "/wifi/test/version-android-V2.html";
-        //const ANDROID_WEIXIN_V2 = "/wifi/test/version-android-V2-weixin.html";
+        const ANDROID_WEIXIN_V2 = "/wifi/test/version-android-V2-weixin.html";
         const IPHONE_V1 = "/wifi/test/version-iphone-V1.html";
         const IPHONE_WEIXIN_V1 = "/wifi/test/version-iphone-V1-weixin.html";
         const IPHONE_V2 = "/wifi/test/version-iphone-V2.html";
@@ -92,9 +92,17 @@
             }
             if (browser.versions.android) {
                 if (cityFilter) {
-                    url = ANDROID_V1;
+                    if (browser.versions.weixin) {
+                        url = ANDROID_WEIXIN_V1;
+                    } else {
+                        url = ANDROID_V1;
+                    }
                 } else {
-                    url = ANDROID_V2;
+                    if (browser.versions.weixin) {
+                        url = ANDROID_WEIXIN_V2;
+                    } else {
+                        url = ANDROID_V2;
+                    }
                 }
             }
             if (browser.versions.iPad) {
@@ -106,7 +114,8 @@
             document.write("Please scan the QR code with a mobile device");
             url = PAGE_PC;
         }
-        //window.location.href = url;
+        window.location.href = url;
+        
     </script>
 </head>
 
