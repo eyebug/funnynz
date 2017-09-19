@@ -15,7 +15,9 @@
     <script type="text/javascript" src="https://iservices-iam.the-ascott.com.cn/wifi/download/cityjson.php"></script>
 
     <script type="text/javascript">
-        var checkWeixinAndV2 = 0;
+        var checkIphoneWeixinAndV2 = 0;
+        var checkAndroidWeixinAndV2 = 0;
+
         const PAGE_IPAD = "https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=961854239&mt=8";
         const PAGE_PC = "/wifi/test/pc.html";
         //const ANDROID_V1 = "/wifi/test/version-android-V1.html";
@@ -87,7 +89,7 @@
                 } else {
                     if (browser.versions.weixin) {
                         url = IPHONE_WEIXIN_V2;
-                        checkWeixinAndV2 = 1;
+                        checkIphoneWeixinAndV2 = 1;
                     } else {
                         url = IPHONE_V2;
                     }
@@ -103,7 +105,7 @@
                 } else {
                     if (browser.versions.weixin) {
                         url = ANDROID_WEIXIN_V2;
-                        checkWeixinAndV2 = 1;
+                        checkAndroidWeixinAndV2 = 1;
                     } else {
                         url = ANDROID_V2;
                     }
@@ -115,8 +117,10 @@
         } else {
             url = PAGE_PC;
         }
-        if (checkWeixinAndV2 == 1) {
+        if (checkIphoneWeixinAndV2 == 1) {
             document.write("<img src='/download/weixin1.png' style='width: 100%'/>;");
+        } else if(checkAndroidWeixinAndV2 == 1) {
+            document.write("<img src='/download/weixin-android.png' style='width: 100%'/>;");
         } else if (url == PAGE_PC) {
             document.write("请使用手机设备扫描");
             document.write("Please scan the QR code with a mobile device");
