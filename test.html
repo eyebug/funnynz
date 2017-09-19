@@ -15,17 +15,21 @@
     <script type="text/javascript" src="https://iservices-iam.the-ascott.com.cn/wifi/download/cityjson.php"></script>
 
     <script type="text/javascript">
-        var checkIphoneAndWeixin = 0;
-        const PAGE_IPAD = "/wifi/test/ipad.html";
+        var checkWeixinAndV2 = 0;
+        const PAGE_IPAD = "https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=961854239&mt=8";
         const PAGE_PC = "/wifi/test/pc.html";
-        const ANDROID_V1 = "/wifi/test/version-android-V1.html";
-        const ANDROID_WEIXIN_V1 = "/wifi/test/version-android-V1-weixin.html";
-        const ANDROID_V2 = "/wifi/test/version-android-V2.html";
-        const ANDROID_WEIXIN_V2 = "/wifi/test/version-android-V2-weixin.html";
-        const IPHONE_V1 = "/wifi/test/version-iphone-V1.html";
-        const IPHONE_WEIXIN_V1 = "/wifi/test/version-iphone-V1-weixin.html";
-        const IPHONE_V2 = "/wifi/test/version-iphone-V2.html";
-        const IPHONE_WEIXIN_V2 = "/wifi/test/version-iphone-V2-weixin.html";
+        //const ANDROID_V1 = "/wifi/test/version-android-V1.html";
+        const ANDROID_V1 = "http://a.app.qq.com/o/simple.jsp?pkgname=com.ascott.android&g_f=991653";
+        //const ANDROID_WEIXIN_V1 = "/wifi/test/version-android-V1-weixin.html";
+        const ANDROID_WEIXIN_V1 = "http://a.app.qq.com/o/simple.jsp?pkgname=com.ascott.android&g_f=991653";
+        const ANDROID_V2 = " https://iservices-iam.the-ascott.com.cn/download/ascott.apk";
+        const ANDROID_WEIXIN_V2 = "https://iservices-iam.the-ascott.com.cn/download/ascott.apk";
+
+
+        const IPHONE_V1 = "https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1024394102&mt=8";
+        const IPHONE_WEIXIN_V1 = "http://a.app.qq.com/o/simple.jsp?pkgname=com.ascott.android";
+        const IPHONE_V2 = "https://itunes.apple.com/us/app/iservice-iam/id1268497466?l=zh&ls=1&mt=8";
+        const IPHONE_WEIXIN_V2 = "https://itunes.apple.com/us/app/iservice-iam/id1268497466?l=zh&ls=1&mt=8";
 
         var browser = {
             versions: function () {
@@ -77,14 +81,13 @@
                 if (cityFilter) {
                     if (browser.versions.weixin) {
                         url = IPHONE_WEIXIN_V1;
-                        checkIphoneAndWeixin = 1;
                     } else {
                         url = IPHONE_V1;
                     }
                 } else {
                     if (browser.versions.weixin) {
                         url = IPHONE_WEIXIN_V2;
-                        checkIphoneAndWeixin = 1;
+                        checkWeixinAndV2 = 1;
                     } else {
                         url = IPHONE_V2;
                     }
@@ -100,6 +103,7 @@
                 } else {
                     if (browser.versions.weixin) {
                         url = ANDROID_WEIXIN_V2;
+                        checkWeixinAndV2 = 1;
                     } else {
                         url = ANDROID_V2;
                     }
@@ -109,12 +113,16 @@
                 url = PAGE_IPAD;
             }
         } else {
-            //when not a mobile device
-            document.write("请使用手机设备扫描");
-            document.write("Please scan the QR code with a mobile device");
             url = PAGE_PC;
         }
-        window.location.href = url;
+        if (checkWeixinAndV2 == 1) {
+            document.write("<img src='/download/weixin1.png' style='width: 100%'/>;");
+        } else if (url == PAGE_PC) {
+            document.write("请使用手机设备扫描");
+            document.write("Please scan the QR code with a mobile device");
+        } else {
+            window.location.href = url;
+        }
 
     </script>
 </head>
